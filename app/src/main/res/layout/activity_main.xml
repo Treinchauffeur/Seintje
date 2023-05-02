@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/appParentView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="?attr/colorSurface"
+    android:keepScreenOn="true">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSurfaceContainer"
+        android:elevation="3dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Seintje"
+        app:titleTextAppearance="@style/TextAppearance.Material3.DisplayMedium"
+        app:titleTextColor="?attr/colorOnSurface" />
+
+    <ScrollView
+        android:id="@+id/mainRailScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="20dp">
+
+                    <LinearLayout
+                        android:id="@+id/chipGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/lichtseinenButton"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="@string/lichtseinen" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/snelheidsbordenButton"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="@string/snelheidsborden" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/overigButton"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="@string/overig" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/chipGroup2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="-5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/combinatieButton"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_marginBottom="-5dp"
+                            android:text="@string/lichtsein_met_snelheidsbord" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/jukButton"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_marginBottom="-5dp"
+                            android:text="@string/stootjuk" />
+
+
+                    </LinearLayout>
+
+                    <ImageView
+                        app:tint="?attr/colorSecondary"
+                        android:elevation="5dp"
+                        android:src="@drawable/round_keyboard_double_arrow_down_24"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"/>
+                </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/railPieceTest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/rail_piece"
+                android:src="@drawable/rail_piece_hoog_hoofd_geel_kn" />
+
+            <ImageView
+                android:id="@+id/railPieceTest2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/rail_piece"
+                android:src="@drawable/rail_piece_snelheidsbord_4" />
+
+            <ImageView
+                android:id="@+id/railPieceTest3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/rail_piece"
+                android:src="@drawable/rail_piece_verlagingsbord_4" />
+
+            <ImageView
+                android:id="@+id/railBottomPiece"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/rail_piece"
+                android:src="@drawable/rail_piece_start" />
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

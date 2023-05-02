@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Seintje</string>
+    <string name="rail_piece">rail piece</string>
+    <string name="snelheidsborden">Snelheidsborden</string>
+    <string name="lichtseinen">Lichtseinen</string>
+    <string name="overig">Overig</string>
+    <string name="combinatie_lichtsein_met_snelheidsbord">Combinatie lichtsein met snelheidsbord</string>
+    <string name="lichtsein_met_snelheidsbord">Lichtsein met snelheidsbord</string>
+    <string name="stootjuk">Stootjuk</string>
+    <string name="elementen_toevoegen">Elementen toevoegen:</string>
+</resources>
