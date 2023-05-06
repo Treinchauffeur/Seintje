@@ -20,10 +20,11 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 
 import org.treinchauffeur.seintje.misc.Constants;
 import org.treinchauffeur.seintje.ui.HoofdseinDialog;
+import org.treinchauffeur.seintje.ui.VoorseinDialog;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Chip lichtseinen, snelheidsborden, overig, lichtseinenSnelheidsborden, stootjuk;
+    private Chip lichtseinen, voorseinen, snelheidsborden, overig, lichtseinenSnelheidsborden, stootjuk;
     protected MaterialToolbar toolbar;
 
     private ExtendedFloatingActionButton editFab, doneFab;
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editFab = findViewById(R.id.editFab);
         editFab.setOnClickListener(this);
         lichtseinen = findViewById(R.id.hoofdseinenButton);
+        voorseinen = findViewById(R.id.voorseinenButton);
         snelheidsborden = findViewById(R.id.snelheidsbordenButton);
         overig = findViewById(R.id.overigButton);
         lichtseinenSnelheidsborden = findViewById(R.id.combinatieButton);
@@ -76,6 +78,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void assignEditingPanelActions() {
         lichtseinen.setOnClickListener(view -> {
             HoofdseinDialog dialog = new HoofdseinDialog(MainActivity.this, this);
+            dialog.show();
+        });
+
+        voorseinen.setOnClickListener(view -> {
+            VoorseinDialog dialog = new VoorseinDialog(MainActivity.this, this);
             dialog.show();
         });
 

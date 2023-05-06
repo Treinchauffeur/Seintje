@@ -23,14 +23,14 @@ import org.treinchauffeur.seintje.MainActivity;
 import org.treinchauffeur.seintje.R;
 import org.treinchauffeur.seintje.misc.Constants;
 
-public class HoofdseinDialog extends Dialog implements View.OnClickListener {
+public class VoorseinDialog extends Dialog implements View.OnClickListener {
 
     protected final Context context;
     protected final MainActivity activity;
     protected ViewGroup allViews;
-    public static final String TAG = "HoofdseinDialog";
+    public static final String TAG = "VoorseinDialog";
 
-    public HoofdseinDialog(@NonNull Context context, MainActivity activity) {
+    public VoorseinDialog(@NonNull Context context, MainActivity activity) {
         super(context);
         this.context = context;
         this.activity = activity;
@@ -41,9 +41,9 @@ public class HoofdseinDialog extends Dialog implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        setContentView(R.layout.dialog_hoofdseinen);
+        setContentView(R.layout.dialog_voorseinen);
 
-        allViews = findViewById(R.id.dialogCardView);
+        allViews = findViewById(R.id.voorseinDialogCardView);
 
         for (View v : allViews.getTouchables()) {
             if (v instanceof Button && v.isClickable()) {
@@ -54,12 +54,10 @@ public class HoofdseinDialog extends Dialog implements View.OnClickListener {
                 if (Constants.DEBUG) {
                     String convertedDrawableResourceString;
                     String preConvertedName = context.getResources().getResourceEntryName(v.getId());
-                    if (preConvertedName.toLowerCase().contains("laag"))
-                        convertedDrawableResourceString = "rail_piece_lichtsein_laag_" + context.getResources().getResourceEntryName(v.getId()).split("Sein")[1].toLowerCase();
-                    else if (preConvertedName.toLowerCase().contains("voorsein"))
+                    if (preConvertedName.toLowerCase().contains("voorsein"))
                         convertedDrawableResourceString = "rail_piece_voorsein_" + context.getResources().getResourceEntryName(v.getId()).split("Sein")[1].toLowerCase();
                     else
-                        convertedDrawableResourceString = "rail_piece_lichtsein_hoog_" + context.getResources().getResourceEntryName(v.getId()).split("Sein")[1].toLowerCase();
+                        convertedDrawableResourceString = "";
 
                     int drawableResourceId = activity.getResources().getIdentifier(convertedDrawableResourceString, "drawable", activity.getPackageName());
                     if (drawableResourceId == 0) {
@@ -69,9 +67,9 @@ public class HoofdseinDialog extends Dialog implements View.OnClickListener {
             }
         }
 
-        MaterialCheckBox showOnjuistCheckBox = findViewById(R.id.onjuistHoofdseinCheckBox);
+        MaterialCheckBox showOnjuistCheckBox = findViewById(R.id.onjuistVoorseinCheckBox);
         showOnjuistCheckBox.setOnCheckedChangeListener((compoundButton, b) -> {
-            ViewGroup hoofdseinGroup = findViewById(R.id.hoofdSeinGroup);
+            ViewGroup hoofdseinGroup = findViewById(R.id.voorSeinGroup);
             int count = hoofdseinGroup.getChildCount();
             for (int i = 0; i < count; i++) {
                 Log.d(TAG, "onCreate: ");
@@ -83,22 +81,10 @@ public class HoofdseinDialog extends Dialog implements View.OnClickListener {
                     }
                 }
             }
-            ViewGroup pSeinGroup = findViewById(R.id.hoofdSeinGroupPSein);
-            int countP = pSeinGroup.getChildCount();
-            for (int i = 0; i < countP; i++) {
-                Log.d(TAG, "onCreate: ");
-                View v = pSeinGroup.getChildAt(i);
-                if (v instanceof RadioButton) {
-                    RadioButton radio = (RadioButton) v;
-                    if (radio.getAlpha() < 1) {
-                        radio.setVisibility(compoundButton.isChecked() ? View.VISIBLE : View.GONE);
-                    }
-                }
-            }
         });
     }
 
-    @SuppressLint("DiscouragedApi") //I REALLY don't want to have to type all those resource IDs..
+    @SuppressLint("DiscouragedApi")
     @Override
     public void onClick(View view) {
         if (view instanceof MaterialButton) {
@@ -108,12 +94,10 @@ public class HoofdseinDialog extends Dialog implements View.OnClickListener {
 
         String convertedDrawableResourceString;
         String preConvertedName = context.getResources().getResourceEntryName(view.getId());
-        if (preConvertedName.toLowerCase().contains("laag"))
-            convertedDrawableResourceString = "rail_piece_lichtsein_laag_" + context.getResources().getResourceEntryName(view.getId()).split("Sein")[1].toLowerCase();
-        else if (preConvertedName.toLowerCase().contains("voorsein"))
+        if (preConvertedName.toLowerCase().contains("voorsein"))
             convertedDrawableResourceString = "rail_piece_voorsein_" + context.getResources().getResourceEntryName(view.getId()).split("Sein")[1].toLowerCase();
         else
-            convertedDrawableResourceString = "rail_piece_lichtsein_hoog_" + context.getResources().getResourceEntryName(view.getId()).split("Sein")[1].toLowerCase();
+            convertedDrawableResourceString = "";
 
         int drawableResourceId = activity.getResources().getIdentifier(convertedDrawableResourceString, "drawable", activity.getPackageName());
         if (drawableResourceId != 0) {
@@ -125,4 +109,5 @@ public class HoofdseinDialog extends Dialog implements View.OnClickListener {
             Log.d(TAG, "onClick: " + convertedDrawableResourceString);
         }
     }
+
 }

@@ -50,4 +50,17 @@
     <string name="dialog_icon">Venster sein icoon</string>
     <string name="onjuiste_seinen_weergeven">Onjuiste / gedoofde seinen weergeven.</string>
     <string name="klaar_met_bewerken">Klaar met bewerken</string>
+    <string name="gedoofd">Gedoofd</string>
+    <string name="rood">Rood</string>
+    <string name="geel">Geel</string>
+    <string name="geel_knipper">Geel knipper</string>
+    <string name="groen">Groen</string>
+    <string name="groen_knipper">Groen knipper</string>
+    <string name="geel_4">Geel 4</string>
+    <string name="geel_6">Geel 6</string>
+    <string name="geel_8">Geel 8</string>
+    <string name="geel_12">Geel 12</string>
+    <string name="geel_13">Geel 13</string>
+    <string name="groen_6">Groen 6</string>
+    <string name="geel_4_knipper">Geel 4 knipper</string>
 </resources>
