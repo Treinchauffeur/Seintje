@@ -38,4 +38,16 @@
     <string name="laag_geel">Laag geel</string>
     <string name="laag_rood">Laag rood</string>
     <string name="laag_gedoofd">Laag gedoofd</string>
+    <string name="seinen_in_het_rood">Seinen die men niet in de praktijk tegenkomt (gedoofd, onjuist etc) worden weergegeven in het rood.</string>
+    <string name="hoog_geel_4">Hoog geel 4</string>
+    <string name="hoog_geel_4_knipper">Hoog geel 4 knipper</string>
+    <string name="bediende_seinen">Bediende seinen</string>
+    <string name="voorseinen">Voorseinen</string>
+    <string name="lichtsein_snelheidsbord">Lichtsein + snelheidsbord</string>
+    <string name="overige">Overige</string>
+    <string name="email_ontwikkelaar">Email ontwikkelaar</string>
+    <string name="seinen_aanpassen">Seinen aanpassen</string>
+    <string name="dialog_icon">Venster sein icoon</string>
+    <string name="onjuiste_seinen_weergeven">Onjuiste / gedoofde seinen weergeven.</string>
+    <string name="klaar_met_bewerken">Klaar met bewerken</string>
 </resources>

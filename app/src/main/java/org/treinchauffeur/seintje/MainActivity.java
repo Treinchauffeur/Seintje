@@ -1,7 +1,9 @@
 package org.treinchauffeur.seintje;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,31 +11,71 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.elevation.SurfaceColors;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
-import org.treinchauffeur.seintje.ui.LichtseinDialog;
+import org.treinchauffeur.seintje.misc.Constants;
+import org.treinchauffeur.seintje.ui.HoofdseinDialog;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Chip lichtseinen, snelheidsborden, overig, lichtseinenSnelheidsborden, stootjuk;
+    protected MaterialToolbar toolbar;
+
+    private ExtendedFloatingActionButton editFab, doneFab;
+
+    private boolean isEditing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        int color = SurfaceColors.SURFACE_2.getColor(this);
+        getWindow().setStatusBarColor(color);
+        findViewById(R.id.signalTypeScrollView).setBackgroundColor(color);
 
-        lichtseinen = findViewById(R.id.lichtseinenButton);
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setOnMenuItemClickListener(item -> {
+            if(item.getItemId() == R.id.menuSendMail) {
+                PackageInfo pInfo;
+                try {
+                    pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+                } catch (PackageManager.NameNotFoundException e) {
+                    Toast.makeText(MainActivity.this, "Er is een fout opgetreden, stuur een mail naar "+Constants.DEV_EMAIL, Toast.LENGTH_LONG).show();
+                    throw new RuntimeException(e);
+                }
+                String version = pInfo.versionName;
+                final Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                emailIntent.setData(Uri.parse("mailto:"));
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{Constants.DEV_EMAIL});
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Over: Seintje v "+version);
+                startActivity(Intent.createChooser(emailIntent, "E-mail versturen.."));
+            }
+            return false;
+        });
+
+        doneFab = findViewById(R.id.doneFab);
+        doneFab.setOnClickListener(this);
+        editFab = findViewById(R.id.editFab);
+        editFab.setOnClickListener(this);
+        lichtseinen = findViewById(R.id.hoofdseinenButton);
         snelheidsborden = findViewById(R.id.snelheidsbordenButton);
         overig = findViewById(R.id.overigButton);
         lichtseinenSnelheidsborden = findViewById(R.id.combinatieButton);
         stootjuk = findViewById(R.id.jukButton);
-        assignButtonActions();
+
+        setisEditing(isEditing);
+        assignEditingPanelActions();
 
     }
 
-    private void assignButtonActions() {
+    private void assignEditingPanelActions() {
         lichtseinen.setOnClickListener(view -> {
-            LichtseinDialog dialog = new LichtseinDialog(MainActivity.this, this);
+            HoofdseinDialog dialog = new HoofdseinDialog(MainActivity.this, this);
             dialog.show();
         });
 
@@ -60,9 +102,42 @@ public class MainActivity extends AppCompatActivity {
      */
     public void insertPiece(int drawableResourceId) {
         ImageView toAdd = new ImageView(MainActivity.this);
+        toAdd.setScaleType(ImageView.ScaleType.CENTER_CROP);
         toAdd.setImageResource(drawableResourceId);
-        toAdd.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        toAdd.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
         LinearLayout mainLinearLayout = findViewById(R.id.mainLinearLayout);
         mainLinearLayout.addView(toAdd, 1);
+    }
+
+    public void insertEmptyPiece() {
+        ImageView toAdd = new ImageView(MainActivity.this);
+        toAdd.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        toAdd.setImageResource(R.drawable.rail_piece_leeg);
+        toAdd.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        LinearLayout mainLinearLayout = findViewById(R.id.mainLinearLayout);
+        mainLinearLayout.addView(toAdd, 1);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.editFab) {
+            setisEditing(true);
+        }
+        if(view.getId() == R.id.doneFab) {
+            setisEditing(false);
+        }
+    }
+
+    private void setisEditing(boolean editing) {
+        isEditing = editing;
+        if(!editing) {
+            editFab.setVisibility(View.VISIBLE);
+            doneFab.setVisibility(View.GONE);
+            findViewById(R.id.editingPanel).setVisibility(View.GONE);
+        } else {
+            editFab.setVisibility(View.GONE);
+            doneFab.setVisibility(View.VISIBLE);
+            findViewById(R.id.editingPanel).setVisibility(View.VISIBLE);
+        }
     }
 }
