@@ -1,4 +1,4 @@
-package org.treinchauffeur.seintje.ui;
+package org.treinchauffeur.seintje.ui.dialogs;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -117,7 +117,6 @@ public class HoofdseinDialog extends Dialog implements View.OnClickListener {
 
         int drawableResourceId = activity.getResources().getIdentifier(convertedDrawableResourceString, "drawable", activity.getPackageName());
         if (drawableResourceId != 0) {
-            activity.insertEmptyPiece();
             activity.insertPiece(drawableResourceId);
             if(!Constants.DEBUG) dismiss();
         } else {

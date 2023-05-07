@@ -3,10 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menuResetLayout"
+        android:title="@string/opslaan"
+        android:icon="@drawable/ic_reset_24"
+        android:iconTint="?attr/colorOnSurface"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/menuSaveLayout"
+        android:title="@string/opslaan"
+        android:icon="@drawable/ic_save_24"
+        android:iconTint="?attr/colorOnSurface"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
         android:id="@+id/menuSendMail"
         android:title="@string/email_ontwikkelaar"
         android:icon="@drawable/ic_email_24"
         android:iconTint="?attr/colorOnSurface"
-        app:showAsAction="always"
+        app:showAsAction="never"
         />
+
 </menu>

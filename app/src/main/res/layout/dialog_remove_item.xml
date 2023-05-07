@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="10dp"
+    android:id="@+id/voorseinDialogCardView"
+    app:cardCornerRadius="28dp"
+    app:strokeWidth="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <ImageView
+            android:id="@+id/heroIcon"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/ic_remove_24"
+            app:tint="?attr/colorOnSurfaceVariant"
+            android:alpha="0.7"
+            android:contentDescription="@string/dialog_icon" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.Material3.HeadlineSmall"
+            android:text="@string/item_verwijderen"
+            android:layout_marginBottom="10dp"
+            android:textColor="?attr/colorOnSurface" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="?attr/colorSecondary"
+            android:alpha="0.8" />
+
+        <TextView
+            android:id="@+id/itemVerwijderenText"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:gravity="center"
+            style="@style/TextAppearance.Material3.BodyMedium"
+            android:text="@string/weet_u_zeker_verwijderen" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="?attr/colorSecondary"
+            android:alpha="0.8" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="end">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/dialogRemoveNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:backgroundTint="?attr/colorSurface"
+                android:textColor="?attr/colorPrimary"
+                android:textAllCaps="true"
+                android:text="@string/nee"
+                app:rippleColor="?attr/colorOnSurface" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/dialogRemoveYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:backgroundTint="?attr/colorSurface"
+                android:textColor="?attr/colorPrimary"
+                android:textAllCaps="true"
+                android:text="@string/ja"
+                app:rippleColor="?attr/colorOnSurface" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

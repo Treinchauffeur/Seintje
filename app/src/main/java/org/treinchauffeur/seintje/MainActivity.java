@@ -18,27 +18,35 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.elevation.SurfaceColors;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
+import org.treinchauffeur.seintje.io.IOFactory;
 import org.treinchauffeur.seintje.misc.Constants;
-import org.treinchauffeur.seintje.ui.HoofdseinDialog;
-import org.treinchauffeur.seintje.ui.VoorseinDialog;
+import org.treinchauffeur.seintje.ui.dialogs.HintDialog;
+import org.treinchauffeur.seintje.ui.dialogs.HoofdseinDialog;
+import org.treinchauffeur.seintje.ui.dialogs.RemoveAllItemsDialog;
+import org.treinchauffeur.seintje.ui.RemoveSignalLongClickListener;
+import org.treinchauffeur.seintje.ui.dialogs.SnelheidsbordDialog;
+import org.treinchauffeur.seintje.ui.dialogs.VoorseinDialog;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Chip lichtseinen, voorseinen, snelheidsborden, overig, lichtseinenSnelheidsborden, stootjuk;
+    IOFactory ioFactory;
+    private Chip lichtseinen, voorseinen, snelheidsborden, overig, lichtseinenSnelheidsborden,
+            stootjuk, leegSpoor, spoorMetWissel;
+    private LinearLayout mainLinearLayout;
     protected MaterialToolbar toolbar;
-
     private ExtendedFloatingActionButton editFab, doneFab;
-
     private boolean isEditing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ioFactory = new IOFactory(this, MainActivity.this);
         int color = SurfaceColors.SURFACE_2.getColor(this);
         getWindow().setStatusBarColor(color);
-        findViewById(R.id.signalTypeScrollView).setBackgroundColor(color);
+        findViewById(R.id.editingPanel).setBackgroundColor(color);
 
+        mainLinearLayout = findViewById(R.id.mainLinearLayout);
         toolbar = findViewById(R.id.toolbar);
         toolbar.setOnMenuItemClickListener(item -> {
             if(item.getItemId() == R.id.menuSendMail) {
@@ -55,6 +63,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{Constants.DEV_EMAIL});
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Over: Seintje v "+version);
                 startActivity(Intent.createChooser(emailIntent, "E-mail versturen.."));
+            } else if(item.getItemId() == R.id.menuSaveLayout) {
+                save();
+                setisEditing(false);
+            } else if(item.getItemId() == R.id.menuResetLayout) {
+                RemoveAllItemsDialog dialog = new RemoveAllItemsDialog(this, MainActivity.this);
+                dialog.show();
             }
             return false;
         });
@@ -69,9 +83,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         overig = findViewById(R.id.overigButton);
         lichtseinenSnelheidsborden = findViewById(R.id.combinatieButton);
         stootjuk = findViewById(R.id.jukButton);
+        leegSpoor = findViewById(R.id.leegSpoorButton);
+        spoorMetWissel = findViewById(R.id.spoorMetWisselButton);
 
         setisEditing(isEditing);
         assignEditingPanelActions();
+
+        if(ioFactory.loadLayout(false).size() > 0)
+            ioFactory.loadLayout(true);
+        else insertBasePiece();
 
     }
 
@@ -87,7 +107,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         snelheidsborden.setOnClickListener(view -> {
-            //Todo create dialog
+            SnelheidsbordDialog dialog = new SnelheidsbordDialog(MainActivity.this, this);
+            dialog.show();
         });
 
         overig.setOnClickListener(view -> {
@@ -101,6 +122,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         stootjuk.setOnClickListener(view -> {
             //Todo create dialog
         });
+
+        leegSpoor.setOnClickListener(view -> insertEmptyPiece());
+
+        spoorMetWissel.setOnClickListener(view -> insertPiece(R.drawable.rail_piece_wissel));
+    }
+
+    public void insertEmptyPiece() {
+        insertPiece(R.drawable.rail_piece_leeg);
+    }
+
+    public void insertBasePiece() {
+        insertPiece(R.drawable.rail_piece_start);
     }
 
     /**
@@ -109,20 +142,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     public void insertPiece(int drawableResourceId) {
         ImageView toAdd = new ImageView(MainActivity.this);
+        toAdd.setOnLongClickListener(new RemoveSignalLongClickListener(this, MainActivity.this));
+        toAdd.setOnClickListener(view -> {
+            if(!isEditing) new HintDialog(MainActivity.this, toAdd).show();
+        });
         toAdd.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        toAdd.setTag(drawableResourceId);
         toAdd.setImageResource(drawableResourceId);
         toAdd.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        LinearLayout mainLinearLayout = findViewById(R.id.mainLinearLayout);
-        mainLinearLayout.addView(toAdd, 1);
+        mainLinearLayout.addView(toAdd, 0);
+        saveSilently();
     }
 
-    public void insertEmptyPiece() {
-        ImageView toAdd = new ImageView(MainActivity.this);
-        toAdd.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        toAdd.setImageResource(R.drawable.rail_piece_leeg);
-        toAdd.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        LinearLayout mainLinearLayout = findViewById(R.id.mainLinearLayout);
-        mainLinearLayout.addView(toAdd, 1);
+    public void removePiece(ImageView toRemove) {
+        mainLinearLayout.removeView(toRemove);
+        saveSilently();
+    }
+
+    public void removeAll() {
+        mainLinearLayout.removeAllViews();
+        insertBasePiece();
+        setisEditing(false);
+    }
+
+
+    private void saveSilently() {
+        ioFactory.saveImageIDs(mainLinearLayout, false);
+    }
+    private void save() {
+        ioFactory.saveImageIDs(mainLinearLayout, true);
     }
 
     @Override
@@ -141,10 +189,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             editFab.setVisibility(View.VISIBLE);
             doneFab.setVisibility(View.GONE);
             findViewById(R.id.editingPanel).setVisibility(View.GONE);
+            toolbar.getMenu().findItem(R.id.menuSaveLayout).setVisible(false);
         } else {
             editFab.setVisibility(View.GONE);
             doneFab.setVisibility(View.VISIBLE);
             findViewById(R.id.editingPanel).setVisibility(View.VISIBLE);
+            toolbar.getMenu().findItem(R.id.menuSaveLayout).setVisible(true);
         }
     }
 }

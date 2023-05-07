@@ -477,8 +477,6 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:text="@string/hoog_rood"
-                    android:textColor="?attr/colorError"
-                    android:alpha="0.9"
                     android:textSize="14dp"
                     tools:ignore="SpUsage,TextContrastCheck,TextSizeCheck" />
 
@@ -517,21 +515,21 @@
                     />
 
                 <RadioButton
-                    android:id="@+id/RadioButtonHoofdSeinPGeel4Knipper"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:text="@string/hoog_geel_4_knipper"
-                    android:textSize="14dp"
-                    tools:ignore="SpUsage"
-                    />
-
-                <RadioButton
                     android:id="@+id/RadioButtonHoofdSeinPGeel4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:text="@string/hoog_geel_4"
+                    android:textSize="14dp"
+                    tools:ignore="SpUsage"
+                    />
+
+                <RadioButton
+                    android:id="@+id/RadioButtonHoofdSeinPGeel4Knipper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="@string/hoog_geel_4_knipper"
                     android:textSize="14dp"
                     tools:ignore="SpUsage"
                     />
