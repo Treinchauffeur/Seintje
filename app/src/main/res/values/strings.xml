@@ -96,4 +96,13 @@
     <string name="betekenis">Betekenis</string>
     <string name="hint">Hint</string>
     <string name="opslaan_caps">OPSLAAN</string>
+    <string name="hoofdseinen_snelheidsborden">Hoofdsein + snelheidsbord</string>
+    <string name="hoog_geel_knipper_snelheidsbord_8">Hoog geel knipper + snelheidsbord 8</string>
+    <string name="hoog_groen_knipper_snelheidsbord_14">Hoog groen knipper + snelheidsbord 14</string>
+    <string name="hoog_groen_snelheidsbord_8">Hoog groen + snelheidsbord 8</string>
+    <string name="hoog_groen_snelheidsbord_13">Hoog groen + snelheidsbord 13</string>
+    <string name="hoog_groen_snelheidsbord_14">Hoog groen + snelheidsbord 14</string>
+    <string name="hoog_groen_baanvakbord_13">Hoog groen + baanvaksnelheidsbord 13</string>
+    <string name="overige_seinen">Overige seinen</string>
+    <string name="keperbakens">Keperbakens</string>
 </resources>

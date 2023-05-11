@@ -20,8 +20,10 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 
 import org.treinchauffeur.seintje.io.IOFactory;
 import org.treinchauffeur.seintje.misc.Constants;
+import org.treinchauffeur.seintje.ui.dialogs.CombinatieSeinenDialog;
 import org.treinchauffeur.seintje.ui.dialogs.HintDialog;
 import org.treinchauffeur.seintje.ui.dialogs.HoofdseinDialog;
+import org.treinchauffeur.seintje.ui.dialogs.OverigeSeinenDialog;
 import org.treinchauffeur.seintje.ui.dialogs.RemoveAllItemsDialog;
 import org.treinchauffeur.seintje.ui.RemoveSignalLongClickListener;
 import org.treinchauffeur.seintje.ui.dialogs.SnelheidsbordDialog;
@@ -96,35 +98,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void assignEditingPanelActions() {
-        lichtseinen.setOnClickListener(view -> {
-            HoofdseinDialog dialog = new HoofdseinDialog(MainActivity.this, this);
-            dialog.show();
-        });
-
-        voorseinen.setOnClickListener(view -> {
-            VoorseinDialog dialog = new VoorseinDialog(MainActivity.this, this);
-            dialog.show();
-        });
-
-        snelheidsborden.setOnClickListener(view -> {
-            SnelheidsbordDialog dialog = new SnelheidsbordDialog(MainActivity.this, this);
-            dialog.show();
-        });
-
-        overig.setOnClickListener(view -> {
-            //Todo create dialog
-        });
-
-        lichtseinenSnelheidsborden.setOnClickListener(view -> {
-            //Todo create dialog
-        });
-
-        stootjuk.setOnClickListener(view -> {
-            //Todo create dialog
-        });
-
+        lichtseinen.setOnClickListener(view -> new HoofdseinDialog(MainActivity.this, this).show());
+        voorseinen.setOnClickListener(view -> new VoorseinDialog(MainActivity.this, this).show());
+        snelheidsborden.setOnClickListener(view -> new SnelheidsbordDialog(MainActivity.this, this).show());
+        overig.setOnClickListener(view -> new OverigeSeinenDialog(MainActivity.this, this).show());
+        lichtseinenSnelheidsborden.setOnClickListener(view -> new CombinatieSeinenDialog(MainActivity.this, this).show());
+        stootjuk.setOnClickListener(view -> insertPiece(R.drawable.rail_piece_juk));
         leegSpoor.setOnClickListener(view -> insertEmptyPiece());
-
         spoorMetWissel.setOnClickListener(view -> insertPiece(R.drawable.rail_piece_wissel));
     }
 
@@ -196,5 +176,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             findViewById(R.id.editingPanel).setVisibility(View.VISIBLE);
             toolbar.getMenu().findItem(R.id.menuSaveLayout).setVisible(true);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(isEditing) {
+            setisEditing(false);
+            return;
+        }
+        super.onBackPressed();
     }
 }
