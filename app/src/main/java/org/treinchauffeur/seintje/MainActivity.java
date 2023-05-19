@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 final Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
                 emailIntent.setData(Uri.parse("mailto:"));
                 emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{Constants.DEV_EMAIL});
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Over: Seintje v "+version);
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Over: Seintje v"+version);
                 startActivity(Intent.createChooser(emailIntent, "E-mail versturen.."));
             } else if(item.getItemId() == R.id.menuSaveLayout) {
                 save();
@@ -144,7 +144,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         insertBasePiece();
         setisEditing(false);
     }
-
 
     private void saveSilently() {
         ioFactory.saveImageIDs(mainLinearLayout, false);

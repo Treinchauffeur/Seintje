@@ -17,9 +17,7 @@ import org.treinchauffeur.seintje.MainActivity;
 import org.treinchauffeur.seintje.misc.Constants;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 public class IOFactory {
 
