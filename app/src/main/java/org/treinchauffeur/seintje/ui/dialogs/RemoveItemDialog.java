@@ -47,10 +47,7 @@ public class RemoveItemDialog extends Dialog implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (view instanceof MaterialButton) {
-            dismiss();
-            return;
-        }
+
         if(view.getId() == R.id.dialogRemoveYes) {
             if(toRemove.getTag().equals(R.drawable.rail_piece_start)) {
                 Toast.makeText(activity, "Dit item kan niet worden verwijderd!", Toast.LENGTH_SHORT).show();
